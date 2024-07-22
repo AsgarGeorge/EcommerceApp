@@ -1,5 +1,7 @@
 package com.ecommerce.project.exceptions;
 
+import java.util.Queue;
+
 public class ResourceNotFound extends RuntimeException {
     String resourceName;
     String field;
@@ -13,8 +15,8 @@ public class ResourceNotFound extends RuntimeException {
         this.fieldName = fieldName;
     }
 
-    public ResourceNotFound(Long fieldId, String field, String resourceName) {
-        super(String.format("%s not found with %s: %d",resourceName,field,fieldId));
+    public ResourceNotFound( String field, String resourceName,Long fieldId) {
+        super(String.format("%s not found with %s: %d",field ,resourceName,fieldId));
         this.fieldId = fieldId;
         this.field = field;
         this.resourceName = resourceName;
