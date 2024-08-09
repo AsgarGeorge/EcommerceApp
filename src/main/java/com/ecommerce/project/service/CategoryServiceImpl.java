@@ -25,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private ModelMapper modelMapper;
 
+
     public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
@@ -49,10 +50,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void createCategory(Category category) {
-        Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
-        if(savedCategory!= null) throw new APIException("category with the name:"+category.getCategoryName()+" already exist");
-        else categoryRepository.save(category);
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+       Category category = modelMapper.map(categoryDTO ,Category.class);
+
+        Category findCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+        if(findCategory!= null) throw new APIException("category with the name:"+category.getCategoryName()+" already exist");
+         Category savedCategory =  categoryRepository.save(category);
+         CategoryDTO savedCategoryDTO = modelMapper.map(savedCategory,CategoryDTO.class);
+
+        return savedCategoryDTO;
     }
 
     @Override
