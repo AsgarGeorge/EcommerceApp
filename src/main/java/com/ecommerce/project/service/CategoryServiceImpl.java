@@ -60,6 +60,21 @@ public class CategoryServiceImpl implements CategoryService {
 
         return savedCategoryDTO;
     }
+    @Override
+    public CategoryDTO updateCategory(CategoryDTO categoryDTO, Long categoryId) {
+        Category category = modelMapper.map(categoryDTO,Category.class);
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+        if(optionalCategory.isPresent()){
+            Category existingCategory = optionalCategory.get();
+            existingCategory.setCategoryName(category.getCategoryName());
+            categoryRepository.save(existingCategory);
+            CategoryDTO existingCategoryDTO = modelMapper.map(existingCategory,CategoryDTO.class);
+            return existingCategoryDTO;
+        }
+        else{
+            throw new ResourceNotFound("Category","categoryId", categoryId);
+        }
+    }
 
     @Override
     public String deleteCategory(Long categoryId) {
@@ -71,18 +86,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     }
 
-    @Override
-    public Category updateCategory(Category category, Long categoryId) {
-        Optional<Category> optionalCategory= categoryRepository.findById(categoryId);
-        if(optionalCategory.isPresent()){
-            Category existingCategory = optionalCategory.get();
-            existingCategory.setCategoryName(category.getCategoryName());
-            categoryRepository.save(existingCategory);
-            return existingCategory;
-        }
-        else{
-            throw new ResourceNotFound("Category","categoryId", categoryId);
-        }
-    }
+
 
 }
