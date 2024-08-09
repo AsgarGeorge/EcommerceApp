@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,12 +78,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public String deleteCategory(Long categoryId) {
+    public CategoryDTO deleteCategory(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(()-> new ResourceNotFound("Category","categoryId", categoryId));
 
         categoryRepository.delete(category);
-        return "category with " + categoryId + " deleted successfully";
+        CategoryDTO deletedCategoryDTO = modelMapper.map(category, CategoryDTO.class);
+        return deletedCategoryDTO;
 
     }
 
