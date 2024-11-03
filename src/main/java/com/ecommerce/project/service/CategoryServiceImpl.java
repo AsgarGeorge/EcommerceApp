@@ -34,9 +34,6 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryServiceImpl() {
     }
 
-    //private final List<Category> categories = new ArrayList<>();
-
-
     @Override
     public CategoryResponse getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
