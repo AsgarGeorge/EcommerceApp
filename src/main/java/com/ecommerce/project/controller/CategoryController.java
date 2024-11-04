@@ -1,6 +1,5 @@
 package com.ecommerce.project.controller;
 
-import com.ecommerce.project.model.Category;
 import com.ecommerce.project.payload.CategoryDTO;
 import com.ecommerce.project.payload.CategoryResponse;
 import com.ecommerce.project.service.CategoryService;
@@ -9,10 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 public class CategoryController {
@@ -34,7 +29,7 @@ public class CategoryController {
     @PutMapping("/api/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO,@PathVariable Long categoryId){
         CategoryDTO updateCategoryDTO = categoryService.updateCategory(categoryDTO,categoryId);
-        return new ResponseEntity<>( updateCategoryDTO , HttpStatus.OK);
+        return new ResponseEntity<>(updateCategoryDTO , HttpStatus.OK);
     }
     @DeleteMapping("/api/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable Long categoryId){
@@ -42,12 +37,4 @@ public class CategoryController {
         return new ResponseEntity<>(deleteCategoryDTO, HttpStatus.OK);
 
     }
-
-
-
-//    @PutMapping("/api/admin/categories")
-//    public ResponseEntity<String> updateCategory(@RequestBody Category category){
-//        String status = categoryService.updateCategory(category);
-//        return new ResponseEntity<>(status,HttpStatus.OK);
-//    }
 }
